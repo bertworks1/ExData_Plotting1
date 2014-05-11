@@ -20,11 +20,13 @@
     # Use sqldf to read only the required data (i.e., data for the 
     # specified dates only).  
     
-    # Specify the dates:
+    # Specify the dates. The format must be D/M/Y to match the 
+    # format in the input file.
     
     readDates = c("1/2/2007", "2/2/2007")
     
-    # Build the SQL statement:
+    # Build the SQL statement. This will handle any number of dates
+    # in readDates, as long as there is at least one.
     
     readSQL = 
         paste("select * from file where Date=='", readDates[1], "'",

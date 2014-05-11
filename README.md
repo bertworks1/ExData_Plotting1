@@ -19,7 +19,7 @@ Alternatively, the data file can be obtained from the UCI Machine Learning Repos
   
 ### Output:  
   
-The output plots were designed to match the reference plots in directory 'figure', except that the image sizes are 480 x 480 pixels as specified in the instructions. Two sets of plot files (.png) were generated. In one set the plots have transparent backgrounds, just as the reference plots do. The other set (indicated by '*_white*' in the file names) have white backgrounds, which some people may find easier to view. The background was altered using the *par(bg='white')* command; this command is not included in the scripts. The scripts will write the plot files to the working directory.  
+The output plots were designed to match the reference plots in directory 'figure', except that the image sizes are 480 x 480 pixels as specified in the instructions. Two sets of plot files (.png) were generated. In one set the plots have transparent backgrounds, just as the reference plots do. The other set (located in the '*white_background_figures*' folder) have white backgrounds, which some people may find easier to view. The background was altered using the *par(bg='white')* command; this command is not included in the scripts. The scripts will write the plot files to the working directory.  
   
   
 ### Assumptions:  
@@ -28,4 +28,5 @@ The output plots were designed to match the reference plots in directory 'figure
 * All script files are in the working directory.
 * The data file is unzipped and located in the working directory.
 * None of the par() options have been changed from the defaults.
+* The active graphics device is the screen. 
   
