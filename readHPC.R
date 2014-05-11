@@ -30,18 +30,20 @@
     
     readSQL = 
         paste("select * from file where Date=='", readDates[1], "'",
-              lapply(readDates[-1], 
-                     function(x) ifelse(is.na(x), "", 
-                                        paste(" or Date=='", x, "'", sep=""))),
+              paste(lapply(readDates[-1], 
+                           function(x) ifelse(is.na(x), "", 
+                                              paste(" or Date=='", x, 
+                                                    "'", sep=""))),
+                    collapse=""),
               sep="")
 
 
-    # Specify all the fields as TEXT. This is necessary because the 
-    # default sqldf behavior will convert the columns with numeric data
-    # to type 'numeric', and in the process will replace '?' with 0, 
-    # which is not desired. Instead, '?' should be replaced with NA. 
-    # This replacement will be done in a subsequent step using the
-    # as.numeric() function.
+    # Specify all the fields as TEXT. This is done because the sqldf
+    # read will not convert columns with both numeric data and 
+    # non-numeric data (such as NA or '?') to type 'numeric'. So instead
+    # of checking which columns have been converted and which haven't,
+    # just read them all as "character" ("TEXT" in SQL) and then convert 
+    # them all in a subsequent step.
     
     readTypes = list(Date="TEXT", Time="TEXT", Global_active_power="TEXT", 
                      Global_reactive_power="TEXT", Voltage="TEXT", 
@@ -53,10 +55,8 @@
     powerData = 
         read.csv.sql(inputFile, sql=readSQL, field.types=readTypes, sep=";")
     
-    # The colClasses parameter seems to have no effect when using 
-    # read.csv.sql, so instead of converting the columns during the 
-    # read operation, they are converted after reading, and a 
-    # combined date/time field is added:
+    # Add a combined date/time field (of type POSIXlt) and convert the 
+    # columns containing numeric data to type "numeric".
     
     powerData$DateTime = 
         strptime(paste(powerData$Date, powerData$Time), "%d/%m/%Y %H:%M:%S")
